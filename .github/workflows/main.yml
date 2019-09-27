@@ -13,3 +13,16 @@ jobs:
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.time }}"
+
+  goodbye_cruel_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say farewell
+    steps:
+    - name: Farewell world action step
+      id: Farewell
+      uses: actions/hello-world-javascript-action@v1
+      with:
+        who-to-greet: 'Looshlee the Supportocat'
+    # Use the output from the `hello` step
+    - name: Get the output time
+      run: echo "It's time to say goodbye!"   
