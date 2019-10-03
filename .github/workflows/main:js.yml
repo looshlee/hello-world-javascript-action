@@ -5,14 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: HelloWorld:js
-      id: hello
-      uses: actions/hello-world-javascript-action@v1
-      with:
-        who-to-greet: 'Looshlee the Supportocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+    - name: My first step
+      if: github.event_name == 'pull_request' && github.event.action == 'closed` && github.event.pull_request.merged
+      run: | 
+       echo "Keep going, this was a merged PR"
 
   goodbye_cruel_world_job:
     runs-on: ubuntu-latest
