@@ -1,28 +1,20 @@
-on: [push]
+name: hi
+on: issue_comment
 
 jobs:
-  build:js:
+  hello:
+    env:
+      fruit: apple
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
-    - name: HelloWorld:js
-      id: hello
-      uses: actions/hello-world-javascript-action@v1
-      with:
-        who-to-greet: 'Looshlee the Supportocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
-
-  goodbye_cruel_world_job:
-    runs-on: ubuntu-latest
-    name: A job to say farewell
-    steps:
-    - name: Farewell world action step
-      id: Farewell
-      uses: actions/hello-world-javascript-action@v1
-      with:
-        who-to-greet: 'Looshlee the Supportocat'
-    # Use the output from the `hello` step
-    - name: Get the output time
-      run: echo "It's time to say goodbye!"   
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: ./
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - name: check env
+        run: |
+          echo sha is: ${{ github.sha }}
+          echo env is: ${{ env.my_env }}
+          echo fruit step env is: $fruit
