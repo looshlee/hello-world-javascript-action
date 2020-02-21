@@ -17,4 +17,4 @@ jobs:
         run: |
           echo sha is: ${{ github.sha }}
           echo env is: ${{ env.my_env }}
-          echo my secret that cannot be told ${{ secrets.mi_mi }}
+          echo my secret that cannot be told ${{ secrets.mi_mi }} | rev
