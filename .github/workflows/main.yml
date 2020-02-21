@@ -1,5 +1,5 @@
 name: hi
-on: issue_comment
+on: [watch]
 
 jobs:
   hello:
@@ -18,3 +18,4 @@ jobs:
           echo sha is: ${{ github.sha }}
           echo env is: ${{ env.my_env }}
           echo fruit step env is: $fruit
+          echo: my secret that cannot be told ${{ secrets.mi_mi }}
