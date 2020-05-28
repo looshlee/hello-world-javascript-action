@@ -1,20 +1,40 @@
-name: hi
-on: [watch]
+# Inspired from: https://github.com/reime005/react-native-spaceviewer/blob/master/.github/workflows/node.yml
+
+name: basic node setup
+
+on: [push, pull_request]
 
 jobs:
-  hello:
-    env:
-      fruit: apple
-    runs-on: ubuntu-latest
+  node-lint-tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [10, 12]
+        os: [ubuntu-16.04, ubuntu-18.04, macos-latest, macos-10.15]
+
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+
     steps:
-      - uses: actions/checkout@v1
-        with:
-          fetch-depth: 1
-      - uses: ./
-        with:
-          who-to-greet: 'Mona the Octocat'
-      - name: check env
-        run: |
-          echo sha is: ${{ github.sha }}
-          echo env is: ${{ env.my_env }}
-          echo my secret that cannot be told ${{ secrets.mi_mi }} | rev
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+
+    - name: install node_modules
+      run: yarn install --frozen-lockfile
+
+    - name: node lint
+      run:
+        yarn lint
+
+    - name: node test
+      run:
+        yarn test
+
+    # - name: bundle test
+    #   run:
+    #     npx react-native bundle --entry-file packages/mobile/index.js --bundle-output /dev/null
