@@ -27,10 +27,6 @@ jobs:
     - name: install node_modules
       run: yarn install --frozen-lockfile
 
-    - name: node lint
-      run:
-        yarn lint
-
     - name: node test
       run:
         yarn test
